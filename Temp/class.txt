@@ -1,0 +1,127 @@
+CLASS	SUBCLASS	CLASS_NAME	SUBCLASS_NAME
+0	0	Consumable	Explosives and Devices
+0	5	Consumable	Food & Drink
+0	1	Consumable	Potion
+0	2	Consumable	Elixir
+0	3	Consumable	Flask
+0	7	Consumable	Bandage
+0	8	Consumable	Other
+0	9	Consumable	Vantus Rune
+1	0	Container	Bag
+1	1	Container	Soul Bag
+1	2	Container	Herb Bag
+1	3	Container	Enchanting Bag
+1	4	Container	Engineering Bag
+1	5	Container	Gem Bag
+1	6	Container	Mining Bag
+1	7	Container	Leatherworking Bag
+1	8	Container	Inscription Bag
+1	9	Container	Tackle Box
+1	10	Container	Cooking Bag
+2	1378	Weapon	Two-Handed Melee Weapon
+2	41617	Weapon	One-Handed Melee Weapon
+2	41105	Weapon	One-Handed Melee Weapon
+2	8849	Weapon	One-Handed Melee Weapon
+2	8337	Weapon	One-Handed Melee Weapon
+2	174067	Weapon	Melee Weapon
+2	173555	Weapon	Melee Weapon
+2	0	Weapon	Axe
+2	1	Weapon	Axe
+2	2	Weapon	Bow
+2	3	Weapon	Gun
+2	4	Weapon	Mace
+2	5	Weapon	Mace
+2	6	Weapon	Polearm
+2	7	Weapon	Sword
+2	8	Weapon	Sword
+2	262156	Weapon	Ranged Weapon
+2	9	Weapon	Warglaives
+2	10	Weapon	Staff
+2	11	Weapon	Bear Claws
+2	12	Weapon	Cat Claws
+2	13	Weapon	Fist Weapon
+2	14	Weapon	Miscellaneous
+2	15	Weapon	Dagger
+2	16	Weapon	Thrown
+2	17	Weapon	Spear
+2	18	Weapon	Crossbow
+2	19	Weapon	Wand
+2	20	Weapon	Fishing Pole
+3	0	Gem	Intellect
+3	1	Gem	Agility
+3	2	Gem	Strength
+3	3	Gem	Stamina
+3	4	Gem	Spirit
+3	5	Gem	Critical Strike
+3	6	Gem	Mastery
+3	7	Gem	Haste
+3	8	Gem	Versatility
+3	9	Gem	Other
+3	10	Gem	Multiple Stats
+3	11	Gem	Artifact Relic
+4	2	Armor	Leather
+4	3	Armor	Mail
+4	4	Armor	Plate
+4	5	Armor	Cosmetic
+4	6	Armor	Shield
+4	7	Armor	Libram
+4	8	Armor	Idol
+4	9	Armor	Totem
+4	10	Armor	Sigil
+4	11	Armor	Relic
+4	96	Armor	Shield
+4	0	Armor	Miscellaneous
+4	1	Armor	Cloth
+5	0	Reagent	Reagent
+5	1	Reagent	Keystone
+6	2	Projectile	Arrow
+6	3	Projectile	Bullet
+7	10	Tradeskill	Elemental
+7	15	Tradeskill	Weapon Enchantment - Obsolete
+7	16	Tradeskill	Inscription
+7	5	Tradeskill	Cloth
+7	6	Tradeskill	Leather
+7	7	Tradeskill	Metal & Stone
+7	8	Tradeskill	Cooking
+7	9	Tradeskill	Herb
+7	12	Tradeskill	Enchanting
+7	4	Tradeskill	Jewelcrafting
+7	1	Tradeskill	Parts
+7	11	Tradeskill	Other
+9	0	Recipe	Book
+9	1	Recipe	Leatherworking
+9	2	Recipe	Tailoring
+9	3	Recipe	Engineering
+9	4	Recipe	Blacksmithing
+9	5	Recipe	Cooking
+9	6	Recipe	Alchemy
+9	7	Recipe	First Aid
+9	8	Recipe	Enchanting
+9	9	Recipe	Fishing
+9	10	Recipe	Jewelcrafting
+9	11	Recipe	Inscription
+11	2	Quiver	Quiver
+11	3	Quiver	Ammo Pouch
+12	0	Quest	Quest
+13	0	Key	Key
+13	1	Key	Lockpick
+15	0	Miscellaneous	Junk
+15	1	Miscellaneous	Reagent
+15	2	Miscellaneous	Companion Pets
+15	3	Miscellaneous	Holiday
+15	4	Miscellaneous	Other
+15	5	Miscellaneous	Mount
+16	1	Glyph	Warrior
+16	2	Glyph	Paladin
+16	3	Glyph	Hunter
+16	4	Glyph	Rogue
+16	5	Glyph	Priest
+16	6	Glyph	Death Knight
+16	7	Glyph	Shaman
+16	8	Glyph	Mage
+16	9	Glyph	Warlock
+16	10	Glyph	Monk
+16	11	Glyph	Druid
+16	12	Glyph	Demon Hunter
+17	0	Battle Pets	BattlePet
+18	0	WoW Token	WoW Token
