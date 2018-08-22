@@ -1,3 +1,3 @@
-# AHArbitrage
+# WoW AH Arbitrage App
 
-An arbitrage app in development..!
+An arbitrage app in development...
