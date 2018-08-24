@@ -105,4 +105,4 @@ venv.bak/
 
 # personal list
 Data/
-libs/api_key.py
+api_key.py
