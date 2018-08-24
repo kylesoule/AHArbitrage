@@ -197,8 +197,9 @@ def initiate(path):
             processfile(files[file])
 
 
-path = "G:\\Downloads\\python\\AH Arbitrage\\Data\\"
-initiate(path)
+# path = "G:\\Downloads\\python\\AH Arbitrage\\Data\\"
+# initiate(path)
+
 
 # oracle_connect.countrecords()
 # sql = "SELECT AVG(*) FROM ( SELECT COUNT(*) FROM PROUDMOORE_A GROUP BY TSTAMP )"
@@ -223,5 +224,17 @@ initiate(path)
 # for buyout in buyouts:
 #   print(buyout)
 
-# json = readjson("G:\\Downloads\\python\\AH Arbitrage\\Data\\1534021316000.json")
-# auctions = json["auctions"]
+timestamp = 1534021316000
+json = readjson("G:\\Downloads\\python\\AHArbitrage\\Data\\1534021316000.json")
+auctions = json["auctions"]
+print(len(auctions))
+test = [1,2,3,4,5,6]
+print(test, end='\t')
+print(*test, sep='\t', end='\t')
+'''
+auctions = sortauctions(json, timestamp)
+
+import pprint
+for auction in auctions[124113]:
+    print(auction.buyout)
+'''
