@@ -30,6 +30,9 @@ class ApiManager:
         """Begin calling on API.
         """
         if len(self.inputqueue) > 0:
+            if len(self.inputqueue) % 100 == 0:
+                print("Items in queue: {count}\n".format(count=len(self.inputqueue)), flush=True)
+
             while self.cancall() is False:
                 self.nap()
 
@@ -48,7 +51,7 @@ class ApiManager:
                 # TODO: Figure out why calls fail in the first place?
                 # Rate limit exceeded...probably?
                 if reason == "API_CALL_FAIL":
-                    self.addqueue((data, queuetype))
+                    self.addqueue(data, queuetype)
 
     def getactivethreads(self):
         """Returns number of active threads.
@@ -228,4 +231,7 @@ class ApiManager:
                 return (False, None, "URL_MISSING")
         except Exception as e:
             debug.log("{e}\nAPI call failed for URL: {url}".format(e=str(e), url=url), traceback=False)
-            return (False, item, "API_CALL_FAIL")
+            if str(e) == "HTTP Error 504: Gateway Timeout":
+                return (False, item, "API_CALL_FAIL_NO_RETRY")
+            else:
+                return (False, item, "API_CALL_FAIL")

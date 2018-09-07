@@ -3,6 +3,7 @@ import json
 import datetime
 import oracle_connect
 import os
+import file_common
 
 
 # General functions
@@ -197,6 +198,36 @@ def initiate(path):
             processfile(files[file])
 
 
+def readquantiles():
+    """Returns quantiles data from prepared file.
+
+    Returns:
+        dict: Item ID keys and 25% quantile of buyoutper on sold items value
+    """
+    quantiles = {}
+    filename = "G:\\Downloads\\quantiles.csv"
+    data = file_common.readcsv(filename)
+    for line in data:
+        if line[1] != "ITEM":
+            quantiles[line[1]] = float(line[2])
+    return quantiles
+
+
+def readavgsold():
+    """Returns average sold data from prepared file.
+
+    Returns:
+        dict: Item ID keys and average sold per hour value
+    """
+    avgsold = {}
+    filename = "G:\\Downloads\\avgsold.csv"
+    data = file_common.readcsv(filename)
+    for line in data:
+        if line[1] != "ITEM":
+            avgsold[line[1]] = float(line[2])
+    return avgsold
+
+
 # path = "G:\\Downloads\\python\\AH Arbitrage\\Data\\"
 # initiate(path)
 
@@ -224,13 +255,86 @@ def initiate(path):
 # for buyout in buyouts:
 #   print(buyout)
 
-timestamp = 1534021316000
-json = readjson("G:\\Downloads\\python\\AHArbitrage\\Data\\1534021316000.json")
-auctions = json["auctions"]
-print(len(auctions))
-test = [1,2,3,4,5,6]
-print(test, end='\t')
-print(*test, sep='\t', end='\t')
+timestamp = 1536210189000
+# filename = "G:\\Downloads\\python\\AHArbitrage\\Data\\1534021316000.json"
+filename = "L:\\Dumps\\emerald-dream\\" + str(timestamp) + ".json"
+# filename = "G:\\Downloads\\python\\Emerald Dream\\" + str(timestamp) + ".json"
+jsn = readjson(filename)
+auctions = jsn["auctions"]
+quantiles = readquantiles()
+avgsolds = readavgsold()
+listed = []
+
+print("%\tItemID\tQuantile\tBuyout\tQty\tBuyoutPer\tAvgSold\tOwner")
+print("-\t------\t--------\t------\t---\t---------\t-------\t-----")
+
+for auction in auctions:
+    itemid = str(auction["item"])
+    buyout = auction["buyout"]
+    quantity = auction["quantity"]
+
+    if buyout > 0 and itemid != "82800":
+        buyoutper = buyout / quantity
+        if itemid in quantiles:
+            quantile = quantiles[itemid]
+            if buyoutper <= quantile:
+                if itemid in avgsolds:
+                    avgsold = avgsolds[itemid]
+                else:
+                    avgsold = 0
+
+                if itemid in listed:
+                    continue
+                else:
+                    if quantile - buyoutper > 1000000 and buyout < 50000000:
+                        listed.append(itemid)
+                        print("{i}\t{q}\t{b}\t{qty}\t{bp}\t{a}\t{o}".format(q=quantile,
+                                                                            i=itemid,
+                                                                            b=buyout,
+                                                                            bp=buyoutper,
+                                                                            qty=quantity,
+                                                                            a=avgsold,
+                                                                            o=auction["owner"]))
+                    # p=round(buyoutper / quantile * 100, 2),
+
+''' OBSOLETE DEAL FINGER BEGIN
+deals = []
+itemids = {}
+
+for auction in auctions:
+    if auction["buyout"] <= 1500000 and auction["buyout"] > 0 and auction["quantity"] == 1:
+        deals.append(auction)
+        if auction['item'] in itemids:
+            if itemids[auction['item']] > auction["buyout"]:
+                itemids[auction['item']] = auction["buyout"]
+        else:
+            itemids[auction['item']] = auction["buyout"]
+
+#print(len(deals))
+#print(len(itemids))
+for key in itemids.keys():
+    print("{key},{minprice}".format(key=key, minprice=itemids[key]))
+
+for auction in auctions:
+    if auction['item'] == 12035:
+        print(auction)
+    if auction['buyout'] < 1500000 and auction['buyout'] > 0:
+        if "modifiers" in auction:
+            if "value" in auction["modifiers"][0]:
+                if auction["modifiers"][0]["value"] > 110:
+                    if auction['item'] in itemids:
+                        cost, level = itemids[auction['item']]
+                        if cost > auction["buyout"]:
+                            # itemids[auction['item']] = auction["buyout"]
+                            itemids[auction["item"]] = (auction["buyout"], auction["modifiers"][0]["value"])
+                    else:
+                        itemids[auction["item"]] = (auction["buyout"], auction["modifiers"][0]["value"])
+
+for key in itemids.keys():
+    cost, level = itemids[key]
+    print("{key},{minprice},{lvl}".format(key=key, minprice=cost, lvl=level))
+OBSOLETE DEAL FINDER END '''
+
 '''
 auctions = sortauctions(json, timestamp)
 

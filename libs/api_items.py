@@ -84,7 +84,7 @@ def getlastmodified():
     return lastmodified
 
 
-def getitemlist(skip=None, limit=None):
+def getitemlist(filename, skip=False, limit=None):
     """Return item IDs from item list already retrieved.
 
     Skip can be True to skip over items already retrieved.
@@ -98,10 +98,10 @@ def getitemlist(skip=None, limit=None):
     Returns:
         list: Return list of item IDs.
     """
-    global filename
+    # global filename
     queue = []
     result = []
-    with open("G:\\Downloads\\itemlist.csv", newline='') as csvfile:
+    with open("G:\\Downloads\\cleanitemlist.csv", newline='') as csvfile:
         spamreader = csv.reader(csvfile, delimiter=',', quotechar='|')
         for row in spamreader:
             queue.append(row[0])
@@ -136,6 +136,14 @@ def getnextitem():
 
     data = download_item_data(queue.pop(0))
     if data is not None:
+        itemLevel = -1
+        requiredLevel = -1
+        if "itemLevel" in data:
+            itemLevel = data["itemLevel"]
+
+        if "requiredLevel" in data:
+            requiredLevel = data["requiredLevel"]
+
         itemdata[data["id"]] = [data["inventoryType"],
                                 data["isAuctionable"],
                                 data["itemClass"],
@@ -143,7 +151,36 @@ def getnextitem():
                                 data["stackable"],
                                 data["sellPrice"],
                                 data["buyPrice"],
-                                data["name"]]
+                                data["name"],
+                                itemLevel,
+                                requiredLevel]
+
+
+def getitemdata(data):
+    """Populates global itemdata with next item ID data from queue
+    """
+    itemdata = {}
+    if data is not None:
+        itemLevel = -1
+        requiredLevel = -1
+        if "itemLevel" in data:
+            itemLevel = data["itemLevel"]
+
+        if "requiredLevel" in data:
+            requiredLevel = data["requiredLevel"]
+
+        itemdata[data["id"]] = [data["inventoryType"],
+                                data["isAuctionable"],
+                                data["itemClass"],
+                                data["itemSubClass"],
+                                data["stackable"],
+                                data["sellPrice"],
+                                data["buyPrice"],
+                                data["name"],
+                                itemLevel,
+                                requiredLevel]
+
+    return itemdata
 
 
 def queuedownload():
@@ -221,10 +258,11 @@ def preparedownloadqueue(itemids):
 # print(data)
 # print(data["name"])
 
-filename = "G:\\Downloads\\python\\AH Arbitrage\\Temp\\itemdata.csv"
+# filename = "G:\\Downloads\\python\\AH Arbitrage\\Temp\\itemdata.csv"
+filename = "G:\\Downloads\\python\\tlist.txt"
 finished = False
 itemdata = {}
-queue = getitemlist(skip=False, limit=150)
+queue = getitemlist(filename, skip=True, limit=None)
 downloadqueue = preparedownloadqueue(queue)
 
 man = api_manager.ApiManager()
@@ -234,7 +272,21 @@ while man.started is False or man.isinputqueueempty() is False or man.getactivet
     man.initiatecall()
     man.nap()
 
-lib_common.prettyprint(len(man.returnoutputqueue("item")))
+itemlist = man.returnoutputqueue("item")
+for item in itemlist:
+    rawdata = getitemdata(item)
+    data = list(rawdata.values())[0]
+    itemdata.update(rawdata)
+
+# filename = "G:\\Downloads\\python\\tlist.txt"
+# headers = ["ItemID", "Type", "Auctionable", "Class", "Subclass", "Stackable", "Sell Price", "Buy Price", "Name", "iLevel", "rLevel"]
+# file_common.writetofile('\t'.join(headers), filename)
+
+for item in itemdata:
+    line = "{item}\t".format(item=str(item))
+    line = line + '\t'.join((str(x) for x in itemdata[item]))
+    file_common.appendtofile(line, filename)
+
 # queue = getitemlist(skip=True)
 
 

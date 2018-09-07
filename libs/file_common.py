@@ -2,6 +2,7 @@
 """
 import csv
 
+
 def appendtofile(data, filename):
     """Appends data to filename
 
@@ -10,6 +11,17 @@ def appendtofile(data, filename):
         filename (str): Full path of filename
     """
     with open(filename, "a") as file:
+        file.write("{data}\n".format(data=data))
+
+
+def writetofile(data, filename):
+    """Appends data to filename
+
+    Args:
+        data (str): Data to append to filename
+        filename (str): Full path of filename
+    """
+    with open(filename, "w") as file:
         file.write("{data}\n".format(data=data))
 
 
