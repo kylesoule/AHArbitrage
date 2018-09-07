@@ -221,6 +221,8 @@ def preparedownloadqueue(itemids):
 # print(data)
 # print(data["name"])
 
+# RESTART HERE
+'''
 filename = "G:\\Downloads\\python\\AH Arbitrage\\Temp\\itemdata.csv"
 finished = False
 itemdata = {}
@@ -236,7 +238,7 @@ while man.started is False or man.isinputqueueempty() is False or man.getactivet
 
 lib_common.prettyprint(len(man.returnoutputqueue("item")))
 # queue = getitemlist(skip=True)
-
+'''
 
 '''
 queuedownload()
