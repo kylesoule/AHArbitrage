@@ -1,7 +1,8 @@
 import math
 import json
 import datetime
-import oracle_connect
+import oracle_insert
+import oracle_select
 import os
 import file_common
 
@@ -111,8 +112,8 @@ def getfiles(path):
 
 def readjson(file):
     with open(file, encoding='utf-8') as fh:
-        jsonData = json.load(fh)
-    return jsonData
+        jsondata = json.load(fh)
+    return jsondata
 
 
 def converttimestamp(ts, um="ms"):
@@ -148,7 +149,7 @@ def processfile(file):
     json = readjson(fullpath)
     auctions = sortauctions(json, timestamp)
     sql = preparesql(auctions)
-    oracle_connect.insertbulk(sql)
+    oracle_insert.insertbulk(sql, GLOBALDB)
 
     print("\t...processed {lcount} lines in file...".format(lcount=len(sql), flush=True))
 
@@ -164,7 +165,7 @@ def processfiles(files):
         json = readjson(fullpath)
         auctions = sortauctions(json, timestamp)
         sql = preparesql(auctions)
-        oracle_connect.insertbulk(sql)
+        oracle_insert.insertbulk(sql, GLOBALDB)
 
         progress += 1
         print("Processed {c} lines in file {p} of {t}...".format(c=len(sql), p=progress, t=total), flush=True)
@@ -183,16 +184,15 @@ def preparesql(auctions):
 
 
 def initiate(path):
-    snapshots = oracle_connect.snapshotlist()
+    snapshots = oracle_select.snapshotlist(GLOBALDB)
     files = getfiles(path)
     i = 0
 
     for file in files:
         i += 1
         tstamp = int(file)
-        if tstamp in snapshots:
-            print("Skipping {tstamp}...{c} of {count}".format(tstamp=tstamp, c=i, count=len(files)), flush=True)
-        else:
+        if tstamp not in snapshots:
+            # print("Skipping {tstamp}...{c} of {count}".format(tstamp=tstamp, c=i, count=len(files)), flush=True)
             print("Begin processing {tstamp}...{c} of {count}".format(
                 tstamp=tstamp, c=i, count=len(files)), flush=True)
             processfile(files[file])
@@ -229,7 +229,13 @@ def readavgsold():
 
 
 # path = "G:\\Downloads\\python\\AH Arbitrage\\Data\\"
-# initiate(path)
+# path = "C:\\Users\\Kyle\\Downloads\\AH Data\\Dumps\\"
+# GLOBALDB = "PROUDMOORE_A"
+# path = "C:\\Users\\Kyle\\Downloads\\AH Data\\Dumps\\proudmoore\\"
+
+GLOBALDB = "EMERALD_DREAM_H"
+path = "C:\\Users\\Kyle\\Downloads\\AH Data\\Dumps\\emerald-dream\\"
+initiate(path)
 
 
 # oracle_connect.countrecords()
@@ -255,6 +261,7 @@ def readavgsold():
 # for buyout in buyouts:
 #   print(buyout)
 
+<<<<<<< HEAD
 timestamp = 1536210189000
 # filename = "G:\\Downloads\\python\\AHArbitrage\\Data\\1534021316000.json"
 filename = "L:\\Dumps\\emerald-dream\\" + str(timestamp) + ".json"
@@ -335,6 +342,8 @@ for key in itemids.keys():
     print("{key},{minprice},{lvl}".format(key=key, minprice=cost, lvl=level))
 OBSOLETE DEAL FINDER END '''
 
+=======
+>>>>>>> a9948f1d6ebcbb0ed94c3fa12fb2a784fde51b38
 '''
 auctions = sortauctions(json, timestamp)
 

@@ -5,7 +5,7 @@ from oracle_connect import connect, commitandclose
 from oracle_common import doall
 
 
-def insertbulk(sql):
+def insertbulk(sql, table):
     """Efficient, bulk insert of data.
 
     Args:
@@ -13,7 +13,7 @@ def insertbulk(sql):
     """
     # TODO: Count number of inputs
     connection, cursor = connect()
-    cursor.prepare("INSERT INTO PROUDMOORE_A VALUES (:1, :2, :3, :4, :5, :6, :7, :8, :9, :10, :11, :12, :13, :14, :15, :16, :17, :18, :19, :20)")
+    cursor.prepare("INSERT INTO {table} VALUES (:1, :2, :3, :4, :5, :6, :7, :8, :9, :10, :11, :12, :13, :14, :15, :16, :17, :18, :19, :20)".format(table=table))
     cursor.executemany(None, sql)
     commitandclose(connection)
 

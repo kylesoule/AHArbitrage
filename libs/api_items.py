@@ -258,8 +258,14 @@ def preparedownloadqueue(itemids):
 # print(data)
 # print(data["name"])
 
+<<<<<<< HEAD
 # filename = "G:\\Downloads\\python\\AH Arbitrage\\Temp\\itemdata.csv"
 filename = "G:\\Downloads\\python\\tlist.txt"
+=======
+# RESTART HERE
+'''
+filename = "G:\\Downloads\\python\\AH Arbitrage\\Temp\\itemdata.csv"
+>>>>>>> a9948f1d6ebcbb0ed94c3fa12fb2a784fde51b38
 finished = False
 itemdata = {}
 queue = getitemlist(filename, skip=True, limit=None)
@@ -288,7 +294,7 @@ for item in itemdata:
     file_common.appendtofile(line, filename)
 
 # queue = getitemlist(skip=True)
-
+'''
 
 '''
 queuedownload()

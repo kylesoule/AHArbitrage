@@ -17,7 +17,7 @@ def countrecords(table):
     connection.close()
 
 
-def priceinformation(item):
+def priceinformation(item, table):
     """Returns price information on item.
 
     Args:
@@ -27,14 +27,14 @@ def priceinformation(item):
         list: Result of select.
     """
     connection, cursor = connect()
-    cursor.execute("SELECT * FROM PROUDMOORE_A WHERE ITEM = {item}".format(item=str(item)))
+    cursor.execute("SELECT * FROM {table} WHERE ITEM = {item}".format(table=table, item=str(item)))
     results = cursor.fetchall()
     cursor.close()
     connection.close()
     return results
 
 
-def snapshotexists(timestamp):
+def snapshotexists(timestamp, table):
     """Returns true/false if timestamp snapshot exists.
 
     Args:
@@ -44,7 +44,7 @@ def snapshotexists(timestamp):
         bool: True if timestamp exists otherwise False.
     """
     connection, cursor = connect()
-    cursor.execute("SELECT UNIQUE TSTAMP FROM PROUDMOORE_A WHERE TSTAMP = {timestamp}".format(timestamp=str(timestamp)))
+    cursor.execute("SELECT UNIQUE TSTAMP FROM {table} WHERE TSTAMP = {timestamp}".format(table=table, timestamp=str(timestamp)))
     result = cursor.fetchone()
     cursor.close()
     connection.close()
@@ -55,14 +55,14 @@ def snapshotexists(timestamp):
         return True
 
 
-def snapshotlist():
+def snapshotlist(table):
     """Returns list of unique snapshots timestamps.
 
     Returns:
         list: List of snapshot timestamps.
     """
     connection, cursor = connect()
-    cursor.execute("SELECT UNIQUE TSTAMP FROM PROUDMOORE_A")
+    cursor.execute("SELECT UNIQUE TSTAMP FROM {table}".format(table=table))
     results = cursor.fetchall()
     cursor.close()
     connection.close()

@@ -10,7 +10,8 @@ def connect():
     Returns:
         (connection, cursor): Tuple of connection and cursor.
     """
-    connection = cx_Oracle.connect(api_key.USERNAME, api_key.PASSWORD, cx_Oracle.makedsn(api_key.IPADDRESS, api_key.PORTNUMBER, api_key.DSN))
+    # connection = cx_Oracle.connect(api_key.USERNAME, api_key.PASSWORD, cx_Oracle.makedsn(api_key.IPADDRESS, api_key.PORTNUMBER, api_key.DSN))
+    connection = cx_Oracle.connect(api_key.USERNAME, api_key.PASSWORD, "ORCL")
     cursor = connection.cursor()
     return (connection, cursor)
 
